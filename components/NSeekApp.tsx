@@ -397,7 +397,7 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
             </span>
           </div>
           <p className="text-slate-300 mb-6">
-            Enhanced version with advanced indexing algorithms, distributed processing, and enterprise features.
+            Enhanced version with advanced indexing algorithms and explainable results.
           </p>
           <button
             onClick={() => onNavigate('/waitlist')}
@@ -462,7 +462,7 @@ const Contact = () => (
           contact@nseek.io
         </a>
         <a
-          href="https://github.com/diogonovo/nseekfs"
+          href="https://github.com/NSeek-AI"
           className="flex items-center border-2 border-slate-500 text-slate-200 px-8 py-4 rounded-lg hover:bg-slate-500/10 transition-all font-semibold backdrop-blur-sm"
         >
           <Github className="w-5 h-5 mr-2" />
@@ -518,7 +518,7 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
               </a>
             </li>
             <li>
-              <a href="https://nseek.io" className="text-slate-400 hover:text-emerald-400 transition-colors">
+              <a href="https://www.nseek.io" className="text-slate-400 hover:text-emerald-400 transition-colors">
                 nseek.io
               </a>
             </li>
