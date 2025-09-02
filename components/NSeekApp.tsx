@@ -2,13 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-// Simple SVG icon components to replace lucide-react
-const Search = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-  </svg>
-)
-
+/* ---------------------------- Ícones em uso ---------------------------- */
 const Zap = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -27,32 +21,11 @@ const Code = ({ className }: { className?: string }) => (
   </svg>
 )
 
-const Clock = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-)
-
 const Database = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <ellipse cx="12" cy="5" rx="9" ry="3" />
     <path d="m3 5v14a9 3 0 0 0 18 0V5" />
     <path d="m3 12a9 3 0 0 0 18 0" />
-  </svg>
-)
-
-const Cpu = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
-    <rect x="9" y="9" width="6" height="6" />
-    <line x1="9" y1="1" x2="9" y2="4" />
-    <line x1="15" y1="1" x2="15" y2="4" />
-    <line x1="9" y1="20" x2="9" y2="23" />
-    <line x1="20" y1="9" x2="23" y2="9" />
-    <line x1="20" y1="14" x2="23" y2="14" />
-    <line x1="1" y1="9" x2="4" y2="9" />
-    <line x1="1" y1="14" x2="4" y2="14" />
-    <line x1="15" y1="20" x2="15" y2="23" />
   </svg>
 )
 
@@ -80,101 +53,18 @@ const CheckCircle = ({ className }: { className?: string }) => (
   </svg>
 )
 
-const BarChart3 = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20V10m0 0l-2 2m2-2l2 2M6 20v-6m0 0l-2 2m2-2l2 2M18 20v-2m0 0l-2 2m2-2l2 2" />
-  </svg>
-)
-
+/* ------------------------------ Tipos básicos ----------------------------- */
 type NavigateFn = (path: string) => void
 
-// Logo component
+/* ------------------------------ Componentes UI ---------------------------- */
+// Logo
 const Logo = ({ className, onClick }: { className?: string; onClick?: () => void }) => (
   <div className={`font-bold text-2xl cursor-pointer ${className}`} onClick={onClick}>
     <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">NSeek</span>
   </div>
 )
 
-// Data simulada para a demo
-type DemoItem = {
-  id: number
-  text: string
-  embedding: number[]
-  category: string
-}
-
-const demoItems: DemoItem[] = [
-  { id: 1, text: 'Machine learning fundamentals and algorithms', embedding: [0.9, 0.2, 0.3], category: 'ML Basics' },
-  { id: 2, text: 'Advanced neural network architectures', embedding: [0.8, 0.1, 0.4], category: 'Deep Learning' },
-  { id: 3, text: 'Natural language processing with transformers', embedding: [0.3, 0.9, 0.2], category: 'NLP' },
-  { id: 4, text: 'Computer vision and convolutional networks', embedding: [0.6, 0.3, 0.8], category: 'Computer Vision' },
-  { id: 5, text: 'Reinforcement learning algorithms', embedding: [0.2, 0.7, 0.5], category: 'RL' },
-  { id: 6, text: 'Data preprocessing and feature engineering', embedding: [0.4, 0.4, 0.1], category: 'Data Science' },
-  { id: 7, text: 'Deep learning optimization techniques', embedding: [0.7, 0.2, 0.6], category: 'Optimization' },
-  { id: 8, text: 'Generative adversarial networks', embedding: [0.5, 0.8, 0.3], category: 'Generative AI' },
-  { id: 9, text: 'Time series analysis and forecasting', embedding: [0.1, 0.5, 0.9], category: 'Time Series' },
-  { id: 10, text: 'Recommendation systems and collaborative filtering', embedding: [0.9, 0.4, 0.2], category: 'RecSys' },
-]
-
-// Cosine similarity
-const cosineSimilarity = (vecA: number[], vecB: number[]) => {
-  const dot = vecA.reduce((sum, a, i) => sum + a * vecB[i], 0)
-  const magA = Math.sqrt(vecA.reduce((sum, a) => sum + a * a, 0))
-  const magB = Math.sqrt(vecB.reduce((sum, b) => sum + b * b, 0))
-  return dot / (magA * magB)
-}
-
-// Dados de comparação realistas
-type Comparison = {
-  name: string
-  latency: string
-  throughput: string
-  accuracy: string
-  color: string
-  note: string
-  context: string
-}
-
-const comparisonData: Record<'faiss' | 'pinecone' | 'weaviate' | 'nseekfs', Comparison> = {
-  faiss: {
-    name: 'FAISS',
-    latency: '1.2ms',
-    throughput: '2.8M',
-    accuracy: '94.8%',
-    color: 'text-red-400',
-    note: 'Highly optimized C++',
-    context: 'Facebook AI Research library',
-  },
-  pinecone: {
-    name: 'Pinecone',
-    latency: '45ms',
-    throughput: '180K',
-    accuracy: '92.3%',
-    color: 'text-orange-400',
-    note: 'Network + cloud overhead',
-    context: 'Managed vector database',
-  },
-  weaviate: {
-    name: 'Weaviate',
-    latency: '15ms',
-    throughput: '420K',
-    accuracy: '91.7%',
-    color: 'text-yellow-400',
-    note: 'GraphQL processing',
-    context: 'Open-source vector DB',
-  },
-  nseekfs: {
-    name: 'nseekfs',
-    latency: '0.8ms',
-    throughput: '1.8M',
-    accuracy: '93.5%',
-    color: 'text-emerald-400',
-    note: 'Local-first, pure Rust',
-    context: 'Memory-optimized indices',
-  },
-}
-
-// Header component
+// Header
 const Header = ({ onNavigate, currentPage }: { onNavigate: NavigateFn; currentPage: string }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -217,25 +107,18 @@ const Header = ({ onNavigate, currentPage }: { onNavigate: NavigateFn; currentPa
               onClick={() => onNavigate('/demo')}
               className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all font-semibold"
             >
-              Live Demo
+              Try nseekfs
             </button>
           </nav>
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden flex flex-col space-y-1 w-6 h-6 justify-center"
+            aria-label="Toggle menu"
           >
-            <span
-              className={`block h-0.5 bg-current transition-transform ${
-                isMenuOpen ? 'rotate-45 translate-y-1' : ''
-              }`}
-            />
+            <span className={`block h-0.5 bg-current transition-transform ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`} />
             <span className={`block h-0.5 bg-current transition-opacity ${isMenuOpen ? 'opacity-0' : ''}`} />
-            <span
-              className={`block h-0.5 bg-current transition-transform ${
-                isMenuOpen ? '-rotate-45 -translate-y-1' : ''
-              }`}
-            />
+            <span className={`block h-0.5 bg-current transition-transform ${isMenuOpen ? '-rotate-45 -translate-y-1' : ''}`} />
           </button>
         </div>
 
@@ -255,7 +138,7 @@ const Header = ({ onNavigate, currentPage }: { onNavigate: NavigateFn; currentPa
                 onClick={() => onNavigate('/demo')}
                 className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all text-center font-semibold"
               >
-                Live Demo
+                Try nseekfs
               </button>
             </div>
           </nav>
@@ -292,7 +175,7 @@ const Hero = ({ onNavigate }: { onNavigate: NavigateFn }) => (
           className="w-full sm:w-auto group bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 flex items-center justify-center font-semibold shadow-xl"
         >
           <Zap className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-          Try nseekfs Now
+          Try nseekfs
         </button>
         <button
           onClick={() => onNavigate('/waitlist')}
@@ -364,47 +247,59 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
   <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 to-slate-800">
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Products</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Our Tools</h2>
         <p className="text-lg text-slate-300 max-w-3xl mx-auto">
           Artificial Inteligence solutions designed for different use cases and deployment scenarios.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        <div className="bg-gradient-to-br from-slate-800 to-slate-700 border border-emerald-500/30 rounded-xl p-8 hover:border-emerald-400/50 transition-all hover:transform hover:scale-105 shadow-xl">
+        {/* Card nseekfs */}
+        <div className="flex flex-col bg-gradient-to-br from-slate-800 to-slate-700 border border-emerald-500/30 rounded-xl p-8 hover:border-emerald-400/50 transition-all hover:transform hover:scale-105 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-white">nseekfs</h3>
             <span className="bg-gradient-to-r from-emerald-500 to-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
               Available
             </span>
           </div>
-          <p className="text-slate-300 mb-6">
+          <p className="text-slate-300 mb-6 flex-grow">
             High-performance vector search engine built in Rust. Local processing, sub-millisecond queries, and Python integration.
           </p>
-          <button
-            onClick={() => onNavigate('/demo')}
-            className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all font-semibold shadow-lg"
-          >
-            Try Live Demo
-          </button>
+          <div className="mt-auto grid grid-cols-2 gap-4">
+            <button
+              onClick={() => window.open('https://github.com/NSeek-AI/nseekfs-core', '_blank')}
+              className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all font-semibold shadow-lg"
+            >
+              GitHub
+            </button>
+            <button
+              onClick={() => window.open('https://pypi.org/project/nseekfs/', '_blank')}
+              className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-lg hover:from-cyan-700 hover:to-blue-700 transition-all font-semibold shadow-lg"
+            >
+              PyPI
+            </button>
+          </div>
         </div>
 
-        <div className="bg-gradient-to-br from-slate-800 to-slate-700 border border-purple-500/30 rounded-xl p-8 hover:border-purple-400/50 transition-all hover:transform hover:scale-105 shadow-xl">
+        {/* Card nseekplus */}
+        <div className="flex flex-col bg-gradient-to-br from-slate-800 to-slate-700 border border-purple-500/30 rounded-xl p-8 hover:border-purple-400/50 transition-all hover:transform hover:scale-105 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-white">nseekplus</h3>
             <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
               Coming Soon
             </span>
           </div>
-          <p className="text-slate-300 mb-6">
+          <p className="text-slate-300 mb-6 flex-grow">
             Enhanced version with advanced indexing algorithms and explainable results.
           </p>
-          <button
-            onClick={() => onNavigate('/waitlist')}
-            className="w-full border-2 border-purple-500 text-purple-400 py-3 rounded-lg hover:bg-purple-500/10 transition-all font-semibold"
-          >
-            Join Waitlist
-          </button>
+          <div className="mt-auto">
+            <button
+              onClick={() => onNavigate('/waitlist')}
+              className="w-full border-2 border-purple-500 text-purple-400 py-3 rounded-lg hover:bg-purple-500/10 transition-all font-semibold"
+            >
+              Join Waitlist
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -441,8 +336,6 @@ const Technology = () => (
     </div>
   </section>
 )
-
-
 
 // Contact
 const Contact = () => (
@@ -487,7 +380,7 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
             <a href="mailto:contact@nseek.io" className="text-slate-400 hover:text-emerald-400 transition-colors" aria-label="Email">
               <Mail className="w-5 h-5" />
             </a>
-            <a href="https://github.com/diogonovo/nseekfs" className="text-slate-400 hover:text-emerald-400 transition-colors" aria-label="GitHub">
+            <a href="https://github.com/NSeek-AI" className="text-slate-400 hover:text-emerald-400 transition-colors" aria-label="GitHub">
               <Github className="w-5 h-5" />
             </a>
           </div>
@@ -497,12 +390,18 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
           <h3 className="text-white font-semibold mb-4">Products</h3>
           <ul className="space-y-2">
             <li>
-              <button onClick={() => onNavigate('/demo')} className="text-slate-400 hover:text-emerald-400 transition-colors">
+              <button
+                onClick={() => onNavigate('/demo')}
+                className="text-slate-400 hover:text-emerald-400 transition-colors"
+              >
                 nseekfs
               </button>
             </li>
             <li>
-              <button onClick={() => onNavigate('/waitlist')} className="text-slate-400 hover:text-emerald-400 transition-colors">
+              <button
+                onClick={() => onNavigate('/waitlist')}
+                className="text-slate-400 hover:text-emerald-400 transition-colors"
+              >
                 nseekplus
               </button>
             </li>
@@ -540,82 +439,8 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
   </footer>
 )
 
-// Demo Page with Comparison Tool
+/* ------------------------------- Página Demo ------------------------------ */
 const DemoPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
-  const [query, setQuery] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
-  const [results, setResults] = useState<
-    (DemoItem & { similarity: number; rank: number; score: string })[] | null
-  >(null)
-  const [searchTimes, setSearchTimes] = useState<Record<string, number>>({})
-  const [isEngineReady, setIsEngineReady] = useState(false)
-  const [selectedEngine, setSelectedEngine] = useState<keyof typeof comparisonData>('nseekfs')
-  const [isRunningComparison, setIsRunningComparison] = useState(false)
-  const [comparisonResults, setComparisonResults] = useState<Record<string, any>>({})
-
-  const handleSearch = async () => {
-    if (!query.trim() || !isEngineReady) return
-    setIsSearching(true)
-    const t0 = performance.now()
-
-    await new Promise(r => setTimeout(r, Math.random() * 50 + 10))
-
-    const words = query.toLowerCase().split(/\s+/)
-    const qEmb = [
-      words.includes('machine') || words.includes('learning') ? 0.8 : Math.random() * 0.3,
-      words.includes('neural') || words.includes('network') ? 0.9 : Math.random() * 0.3,
-      words.includes('vision') || words.includes('image') ? 0.8 : Math.random() * 0.3
-    ]
-
-    const searchResults = demoItems
-      .map(item => ({
-        ...item,
-        similarity: cosineSimilarity(qEmb, item.embedding),
-        rank: 0,
-        score: ''
-      }))
-      .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 5)
-      .map((item, i) => ({
-        ...item,
-        rank: i + 1,
-        score: (item.similarity * 100).toFixed(1) + '%'
-      }))
-
-    const elapsed = performance.now() - t0
-    setSearchTimes({ [selectedEngine]: elapsed })
-    setResults(searchResults)
-    setSearchTime(elapsed)
-    setIsSearching(false)
-  }
-
-  const runComparison = async () => {
-    if (!query.trim()) return
-    setIsRunningComparison(true)
-    setComparisonResults({})
-
-    const engines = Object.keys(comparisonData)
-    
-    for (const engine of engines) {
-      const engineData = comparisonData[engine as keyof typeof comparisonData]
-      const baseLatency = parseFloat(engineData.latency.replace('ms', ''))
-      const simulatedTime = baseLatency + (Math.random() * baseLatency * 0.2) // Add some variance
-      
-      await new Promise(r => setTimeout(r, simulatedTime * 10)) // Simulate actual delay
-      
-      setComparisonResults(prev => ({
-        ...prev,
-        [engine]: {
-          time: simulatedTime,
-          throughput: engineData.throughput,
-          accuracy: engineData.accuracy
-        }
-      }))
-    }
-    
-    setIsRunningComparison(false)
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 text-white">
       <Header onNavigate={onNavigate} currentPage="/demo" />
@@ -623,142 +448,27 @@ const DemoPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Live Demo: nseekfs Performance
-            </h1>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
-              Try real vector search queries and compare nseekfs performance against other solutions.
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">nseekfs</h1>
+            <p className="text-lg text-slate-300 max-w-3xl mx-auto mb-6">
+              Try the real vector search and compare nseekfs performance against other solutions.
             </p>
-          </div>
 
-          {/* Search Interface */}
-          <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-8 mb-8">
-            <div className="flex items-center justify-center mb-6">
-              <div className={`w-3 h-3 rounded-full ${isEngineReady ? 'bg-green-500' : 'bg-yellow-500'} mr-2`} />
-              <span className="text-slate-300">
-                {isEngineReady ? 'Vector engine ready' : 'Loading vector index...'}
-              </span>
-            </div>
-
-            <div className="flex gap-4 mb-6">
-              <div className="flex-1">
-                <input
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  placeholder="Try: machine learning, neural networks, computer vision..."
-                  className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500/50"
-                  disabled={!isEngineReady}
-                />
-              </div>
+            {/* Botões GitHub e PyPI */}
+            <div className="flex justify-center gap-4">
               <button
-                onClick={handleSearch}
-                disabled={!query.trim() || !isEngineReady || isSearching}
-                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-8 py-3 rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all font-semibold disabled:opacity-50"
+                onClick={() => window.open('https://github.com/NSeek-AI/nseekfs-core', '_blank')}
+                className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:from-emerald-700 hover:to-teal-700 transition-all"
               >
-                {isSearching ? 'Searching...' : 'Search'}
+                GitHub
               </button>
               <button
-                onClick={runComparison}
-                disabled={!query.trim() || !isEngineReady || isRunningComparison}
-                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all font-semibold disabled:opacity-50"
+                onClick={() => window.open('https://pypi.org/project/nseekfs/', '_blank')}
+                className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:from-cyan-700 hover:to-blue-700 transition-all"
               >
-                {isRunningComparison ? 'Comparing...' : 'Compare All'}
+                PyPI
               </button>
             </div>
-
-            {/* Engine selector */}
-            <div className="flex gap-2 flex-wrap justify-center">
-              {Object.entries(comparisonData).map(([key, engine]) => (
-                <button
-                  key={key}
-                  onClick={() => setSelectedEngine(key as keyof typeof comparisonData)}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    selectedEngine === key
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50'
-                  }`}
-                >
-                  {engine.name}
-                </button>
-              ))}
-            </div>
           </div>
-
-          {/* Results */}
-          {results && (
-            <div className="grid lg:grid-cols-2 gap-8">
-              <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Search Results</h3>
-                <div className="space-y-4">
-                  {results.map((result) => (
-                    <div key={result.id} className="bg-slate-700/30 rounded-lg p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-sm font-medium text-emerald-400">#{result.rank}</span>
-                        <span className="text-sm text-slate-400">{result.score}</span>
-                      </div>
-                      <p className="text-white mb-2">{result.text}</p>
-                      <span className="text-xs bg-slate-600/50 px-2 py-1 rounded text-slate-300">
-                        {result.category}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 text-sm text-slate-400">
-                  Query processed in <span className="text-emerald-400 font-semibold">{searchTime.toFixed(1)}ms</span>
-                </div>
-              </div>
-
-              <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Performance Comparison</h3>
-                {Object.keys(comparisonResults).length > 0 ? (
-                  <div className="space-y-4">
-                    {Object.entries(comparisonData).map(([key, engine]) => {
-                      const result = comparisonResults[key]
-                      return (
-                        <div key={key} className="bg-slate-700/30 rounded-lg p-4">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className={`font-semibold ${engine.color}`}>{engine.name}</span>
-                            {result && (
-                              <span className="text-white font-mono">
-                                {result.time.toFixed(1)}ms
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-xs text-slate-400 mb-2">{engine.context}</div>
-                          {result ? (
-                            <div className="grid grid-cols-3 gap-2 text-xs">
-                              <div>
-                                <div className="text-slate-400">Throughput</div>
-                                <div className="text-white">{result.throughput}/s</div>
-                              </div>
-                              <div>
-                                <div className="text-slate-400">Accuracy</div>
-                                <div className="text-white">{result.accuracy}</div>
-                              </div>
-                              <div>
-                                <div className="text-slate-400">Note</div>
-                                <div className="text-white">{engine.note}</div>
-                              </div>
-                            </div>
-                          ) : isRunningComparison ? (
-                            <div className="text-slate-400 text-sm">Running...</div>
-                          ) : (
-                            <div className="text-slate-500 text-sm">Click "Compare All" to test</div>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
-                ) : (
-                  <div className="text-slate-400 text-center py-8">
-                    Run a comparison to see performance metrics across different vector search engines.
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
 
           {/* Integration Example */}
           <div className="mt-12 bg-slate-800/50 border border-slate-600/30 rounded-xl p-8">
@@ -769,18 +479,37 @@ const DemoPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
             <pre className="bg-slate-900 border border-slate-600/30 rounded-lg p-6 overflow-x-auto">
               <code className="text-slate-200 font-mono text-sm">{`pip install nseekfs
 
-from nseekfs import VectorIndex
-import numpy as np
+# Basic usage
+index = nseekfs.from_embeddings(
+    embeddings,        # numpy array of float32 vectors
+    normalized=True,   # normalize vectors (default: False)
+    verbose=False      # show progress (default: False)
+)
 
-# Load your embeddings
-embeddings = np.load('your_embeddings.npy')
-index = VectorIndex.from_embeddings(embeddings)
+# Load existing index
+index = nseekfs.from_bin("path/to/index.nseek")
 
-# Query
-query_vector = get_embedding("your search query")
-results = index.search(query_vector, k=10)
 
-print(f"Found {len(results)} results in {results.latency_ms:.1f}ms")`}</code>
+### Query Methods
+# Simple query (returns list of dicts)
+results = index.query(query_vector, top_k=10)
+
+# Returns: [{'idx': int, 'score': float}, ...]
+
+
+# Detailed query (returns QueryResult object)
+result = index.query_detailed(query_vector, top_k=10)
+
+
+# Simple query explicitly
+results = index.query_simple(query_vector, top_k=10)
+
+
+# Batch queries
+batch_results = index.query_batch(queries_array, top_k=10)
+
+
+# Returns: List of lists of dicts`}</code>
             </pre>
           </div>
         </div>
@@ -791,7 +520,7 @@ print(f"Found {len(results)} results in {results.latency_ms:.1f}ms")`}</code>
   )
 }
 
-// Waitlist Page
+/* ----------------------------- Página Waitlist ---------------------------- */
 const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -804,15 +533,12 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
   const handleInterestChange = (interest: string) => {
     setFormData((prev) => ({
       ...prev,
-      interest: prev.interest.includes(interest) 
-        ? prev.interest.filter((i) => i !== interest) 
-        : [...prev.interest, interest],
+      interest: prev.interest.includes(interest) ? prev.interest.filter((i) => i !== interest) : [...prev.interest, interest],
     }))
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would submit to your API
     console.log('Waitlist submission:', formData)
     setSubmitted(true)
   }
@@ -853,9 +579,7 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
           <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Name *
-                </label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Name *</label>
                 <input
                   type="text"
                   value={formData.name}
@@ -867,9 +591,7 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Email *
-                </label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Email *</label>
                 <input
                   type="email"
                   value={formData.email}
@@ -881,17 +603,9 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-3">
-                  What interests you? *
-                </label>
+                <label className="block text-sm font-medium text-slate-300 mb-3">What interests you? *</label>
                 <div className="space-y-2">
-                  {[
-                    'Enterprise features',
-                    'Distributed processing',
-                    'Advanced indexing',
-                    'Custom integrations',
-                    'API access',
-                  ].map((option) => (
+                  {['Enterprise features', 'Distributed processing', 'Advanced indexing', 'Custom integrations', 'API access'].map((option) => (
                     <label key={option} className="flex items-center">
                       <input
                         type="checkbox"
@@ -906,9 +620,7 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">
-                  Tell us about your use case
-                </label>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Tell us about your use case</label>
                 <textarea
                   value={formData.comment}
                   onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
@@ -935,9 +647,18 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
   )
 }
 
-// Main App
+/* --------------------------------- App Root -------------------------------- */
 export default function NSeekApp() {
   const [currentPage, setCurrentPage] = useState<'/' | '/demo' | '/waitlist'>('/')
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    }, 0)
+    return () => clearTimeout(id)
+  }, [currentPage])
+
+
 
   const navigate: NavigateFn = (path) => {
     if (path === '/demo' || path === '/waitlist' || path === '/') {
