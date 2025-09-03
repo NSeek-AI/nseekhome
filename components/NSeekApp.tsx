@@ -55,6 +55,7 @@ const CheckCircle = ({ className }: { className?: string }) => (
 
 /* ------------------------------ Tipos básicos ----------------------------- */
 type NavigateFn = (path: string) => void
+type GoToSectionFn = (id: string) => void
 
 /* ------------------------------ Componentes UI ---------------------------- */
 // Logo
@@ -65,7 +66,15 @@ const Logo = ({ className, onClick }: { className?: string; onClick?: () => void
 )
 
 // Header
-const Header = ({ onNavigate, currentPage }: { onNavigate: NavigateFn; currentPage: string }) => {
+const Header = ({
+  onNavigate,
+  currentPage,
+  goToSection,
+}: {
+  onNavigate: NavigateFn
+  currentPage: string
+  goToSection: GoToSectionFn
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const navItems = [
@@ -76,14 +85,7 @@ const Header = ({ onNavigate, currentPage }: { onNavigate: NavigateFn; currentPa
   ]
 
   const handleNavClick = (item: { id: string; label: string }) => {
-    if (currentPage !== '/') {
-      onNavigate('/')
-      setTimeout(() => {
-        document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
-    } else {
-      document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })
-    }
+    goToSection(item.id)
     setIsMenuOpen(false)
   }
 
@@ -367,7 +369,7 @@ const Contact = () => (
 )
 
 // Footer
-const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
+const Footer = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSection: GoToSectionFn }) => (
   <footer className="border-t border-slate-700/50 py-12 px-4 sm:px-6 lg:px-8 bg-slate-900">
     <div className="max-w-6xl mx-auto">
       <div className="grid md:grid-cols-4 gap-8 mb-8">
@@ -412,9 +414,12 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
           <h3 className="text-white font-semibold mb-4">Company</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#contact" className="text-slate-400 hover:text-emerald-400 transition-colors">
+              <button
+                onClick={() => goToSection('contact')}
+                className="text-slate-400 hover:text-emerald-400 transition-colors"
+              >
                 Contact
-              </a>
+              </button>
             </li>
             <li>
               <a href="https://www.nseek.io" className="text-slate-400 hover:text-emerald-400 transition-colors">
@@ -440,10 +445,10 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
 )
 
 /* ------------------------------- Página Demo ------------------------------ */
-const DemoPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
+const DemoPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSection: GoToSectionFn }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 text-white">
-      <Header onNavigate={onNavigate} currentPage="/demo" />
+      <Header onNavigate={onNavigate} currentPage="/demo" goToSection={goToSection} />
 
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
@@ -515,13 +520,13 @@ batch_results = index.query_batch(queries_array, top_k=10)
         </div>
       </div>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} goToSection={goToSection} />
     </div>
   )
 }
 
 /* ----------------------------- Página Waitlist ---------------------------- */
-const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
+const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSection: GoToSectionFn }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -565,7 +570,7 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 text-white">
-      <Header onNavigate={onNavigate} currentPage="/waitlist" />
+      <Header onNavigate={onNavigate} currentPage="/waitlist" goToSection={goToSection} />
 
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto">
@@ -642,7 +647,7 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
         </div>
       </div>
 
-      <Footer onNavigate={onNavigate} />
+      <Footer onNavigate={onNavigate} goToSection={goToSection} />
     </div>
   )
 }
@@ -650,7 +655,9 @@ const WaitlistPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
 /* --------------------------------- App Root -------------------------------- */
 export default function NSeekApp() {
   const [currentPage, setCurrentPage] = useState<'/' | '/demo' | '/waitlist'>('/')
+  const [pendingHash, setPendingHash] = useState<string | null>(null)
 
+  // scroll para topo ao trocar de "página"
   useEffect(() => {
     const id = setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -658,7 +665,16 @@ export default function NSeekApp() {
     return () => clearTimeout(id)
   }, [currentPage])
 
-
+  // quando a home renderizar e existir um hash pendente, faz scroll à âncora
+  useEffect(() => {
+    if (currentPage === '/' && pendingHash) {
+      const id = pendingHash
+      setPendingHash(null)
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+      }, 0)
+    }
+  }, [currentPage, pendingHash])
 
   const navigate: NavigateFn = (path) => {
     if (path === '/demo' || path === '/waitlist' || path === '/') {
@@ -668,18 +684,27 @@ export default function NSeekApp() {
     }
   }
 
-  if (currentPage === '/demo') return <DemoPage onNavigate={navigate} />
-  if (currentPage === '/waitlist') return <WaitlistPage onNavigate={navigate} />
+  const goToSection: GoToSectionFn = (id) => {
+    if (currentPage !== '/') {
+      setPendingHash(id)
+      setCurrentPage('/')
+    } else {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  if (currentPage === '/demo') return <DemoPage onNavigate={navigate} goToSection={goToSection} />
+  if (currentPage === '/waitlist') return <WaitlistPage onNavigate={navigate} goToSection={goToSection} />
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/10 to-slate-900 text-white">
-      <Header onNavigate={navigate} currentPage="/" />
+      <Header onNavigate={navigate} currentPage="/" goToSection={goToSection} />
       <Hero onNavigate={navigate} />
       <Vision />
       <Projects onNavigate={navigate} />
       <Technology />
       <Contact />
-      <Footer onNavigate={navigate} />
+      <Footer onNavigate={navigate} goToSection={goToSection} />
     </div>
   )
 }
