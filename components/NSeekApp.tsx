@@ -267,13 +267,13 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
           </p>
           <div className="mt-auto grid grid-cols-2 gap-4">
             <button
-              onClick={() => window.open('https://github.com/NSeek-AI/nseekfs-core', '_blank')}
+              onClick={() => window.open('https://github.com/NSeek-AI/nseekfs', '_blank')}
               className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all font-semibold shadow-lg"
             >
               GitHub
             </button>
             <button
-              onClick={() => window.open('https://pypi.org/project/nseekfs/', '_blank')}
+              onClick={() => window.open('https://test.pypi.org/project/nseekfs/', '_blank')}
               className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-lg hover:from-cyan-700 hover:to-blue-700 transition-all font-semibold shadow-lg"
             >
               PyPI
@@ -456,13 +456,13 @@ const DemoPage = ({ onNavigate }: { onNavigate: NavigateFn }) => {
             {/* Botões GitHub e PyPI */}
             <div className="flex justify-center gap-4">
               <button
-                onClick={() => window.open('https://github.com/NSeek-AI/nseekfs-core', '_blank')}
+                onClick={() => window.open('https://github.com/NSeek-AI/nseekfs', '_blank')}
                 className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:from-emerald-700 hover:to-teal-700 transition-all"
               >
                 GitHub
               </button>
               <button
-                onClick={() => window.open('https://pypi.org/project/nseekfs/', '_blank')}
+                onClick={() => window.open('https://test.pypi.org/project/nseekfs/', '_blank')}
                 className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:from-cyan-700 hover:to-blue-700 transition-all"
               >
                 PyPI
