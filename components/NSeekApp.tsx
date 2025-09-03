@@ -487,7 +487,7 @@ const Footer = ({ onNavigate }: { onNavigate: NavigateFn }) => (
             <a href="mailto:contact@nseek.io" className="text-slate-400 hover:text-emerald-400 transition-colors" aria-label="Email">
               <Mail className="w-5 h-5" />
             </a>
-            <a href="https://github.com/diogonovo/nseekfs" className="text-slate-400 hover:text-emerald-400 transition-colors" aria-label="GitHub">
+            <a href="https://github.com/NSeek-AI" className="text-slate-400 hover:text-emerald-400 transition-colors" aria-label="GitHub">
               <Github className="w-5 h-5" />
             </a>
           </div>
