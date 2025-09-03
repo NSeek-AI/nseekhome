@@ -256,7 +256,6 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        {/* Card nseekfs */}
         <div className="flex flex-col bg-gradient-to-br from-slate-800 to-slate-700 border border-emerald-500/30 rounded-xl p-8 hover:border-emerald-400/50 transition-all hover:transform hover:scale-105 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-white">nseekfs</h3>
@@ -283,7 +282,6 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
           </div>
         </div>
 
-        {/* Card nseekplus */}
         <div className="flex flex-col bg-gradient-to-br from-slate-800 to-slate-700 border border-purple-500/30 rounded-xl p-8 hover:border-purple-400/50 transition-all hover:transform hover:scale-105 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-2xl font-bold text-white">nseekplus</h3>
@@ -458,7 +456,6 @@ const DemoPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSec
               Try the real vector search and compare nseekfs performance against other solutions.
             </p>
 
-            {/* Botões GitHub e PyPI */}
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => window.open('https://github.com/NSeek-AI/nseekfs', '_blank')}
@@ -475,7 +472,6 @@ const DemoPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSec
             </div>
           </div>
 
-          {/* Integration Example */}
           <div className="mt-12 bg-slate-800/50 border border-slate-600/30 rounded-xl p-8">
             <h3 className="text-xl font-semibold text-white mb-6 flex items-center">
               <Code className="w-6 h-6 mr-2 text-emerald-400" />
@@ -534,6 +530,7 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
     comment: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleInterestChange = (interest: string) => {
     setFormData((prev) => ({
@@ -542,10 +539,34 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const encode = (data: Record<string, any>) =>
+    Object.keys(data)
+      .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+      .join('&')
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Waitlist submission:', formData)
-    setSubmitted(true)
+    setSubmitting(true)
+    try {
+      const payload = {
+        'form-name': 'waitlist',
+        name: formData.name,
+        email: formData.email,
+        interest: formData.interest.join(', '),
+        comment: formData.comment || '',
+      }
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode(payload),
+      })
+      setSubmitted(true)
+    } catch (err) {
+      console.error('Netlify Forms submit error:', err)
+      alert('Não foi possível submeter. Tenta novamente em breve.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -582,13 +603,28 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
           </div>
 
           <div className="bg-slate-800/50 border border-slate-600/30 rounded-xl p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              name="waitlist"
+              data-netlify="true"
+              netlify-honeypot="bot-field"
+              method="POST"
+              className="space-y-6"
+            >
+              <input type="hidden" name="form-name" value="waitlist" />
+              <p hidden>
+                <label>
+                  Não preencher: <input name="bot-field" onChange={() => {}} />
+                </label>
+              </p>
+
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Name *</label>
                 <input
                   type="text"
+                  name="name"
                   value={formData.name}
-                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
                   className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500/50"
                   placeholder="Your name"
                   required
@@ -599,8 +635,9 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
                 <label className="block text-sm font-medium text-slate-300 mb-2">Email *</label>
                 <input
                   type="email"
+                  name="email"
                   value={formData.email}
-                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                   className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500/50"
                   placeholder="your@email.com"
                   required
@@ -614,6 +651,7 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
                     <label key={option} className="flex items-center">
                       <input
                         type="checkbox"
+                        name="interest"
                         checked={formData.interest.includes(option)}
                         onChange={() => handleInterestChange(option)}
                         className="rounded border-slate-600 bg-slate-700/50 text-emerald-600 focus:ring-emerald-500/50"
@@ -627,8 +665,9 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Tell us about your use case</label>
                 <textarea
+                  name="comment"
                   value={formData.comment}
-                  onChange={(e) => setFormData(prev => ({ ...prev, comment: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, comment: e.target.value }))}
                   rows={4}
                   className="w-full bg-slate-700/50 border border-slate-600/50 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500/50"
                   placeholder="What are you planning to build?"
@@ -637,10 +676,10 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
 
               <button
                 type="submit"
-                disabled={!formData.name || !formData.email || formData.interest.length === 0}
+                disabled={submitting || !formData.name || !formData.email || formData.interest.length === 0}
                 className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-3 rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all font-semibold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
-                Join Waitlist
+                {submitting ? 'Submitting...' : 'Join Waitlist'}
               </button>
             </form>
           </div>
@@ -657,7 +696,6 @@ export default function NSeekApp() {
   const [currentPage, setCurrentPage] = useState<'/' | '/demo' | '/waitlist'>('/')
   const [pendingHash, setPendingHash] = useState<string | null>(null)
 
-  // scroll para topo ao trocar de "página"
   useEffect(() => {
     const id = setTimeout(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -665,7 +703,6 @@ export default function NSeekApp() {
     return () => clearTimeout(id)
   }, [currentPage])
 
-  // quando a home renderizar e existir um hash pendente, faz scroll à âncora
   useEffect(() => {
     if (currentPage === '/' && pendingHash) {
       const id = pendingHash
@@ -693,18 +730,46 @@ export default function NSeekApp() {
     }
   }
 
-  if (currentPage === '/demo') return <DemoPage onNavigate={navigate} goToSection={goToSection} />
-  if (currentPage === '/waitlist') return <WaitlistPage onNavigate={navigate} goToSection={goToSection} />
+  /* Formulário fantasma para deteção do Netlify */
+  const NetlifyFormDetector = () => (
+    <form name="waitlist" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="interest" />
+      <textarea name="comment" />
+    </form>
+  )
+
+  if (currentPage === '/demo') {
+    return (
+      <>
+        <NetlifyFormDetector />
+        <DemoPage onNavigate={navigate} goToSection={goToSection} />
+      </>
+    )
+  }
+
+  if (currentPage === '/waitlist') {
+    return (
+      <>
+        <NetlifyFormDetector />
+        <WaitlistPage onNavigate={navigate} goToSection={goToSection} />
+      </>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/10 to-slate-900 text-white">
-      <Header onNavigate={navigate} currentPage="/" goToSection={goToSection} />
-      <Hero onNavigate={navigate} />
-      <Vision />
-      <Projects onNavigate={navigate} />
-      <Technology />
-      <Contact />
-      <Footer onNavigate={navigate} goToSection={goToSection} />
-    </div>
+    <>
+      <NetlifyFormDetector />
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/10 to-slate-900 text-white">
+        <Header onNavigate={navigate} currentPage="/" goToSection={goToSection} />
+        <Hero onNavigate={navigate} />
+        <Vision />
+        <Projects onNavigate={navigate} />
+        <Technology />
+        <Contact />
+        <Footer onNavigate={navigate} goToSection={goToSection} />
+      </div>
+    </>
   )
 }
