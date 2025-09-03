@@ -483,7 +483,7 @@ const DemoPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSec
 # Basic usage
 index = nseekfs.from_embeddings(
     embeddings,        # numpy array of float32 vectors
-    normalized=True,   # normalize vectors (default: False)
+    normalized=True,   # true if vectors already normalized (default: False)
     verbose=False      # show progress (default: False)
 )
 
