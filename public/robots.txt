@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nseek.com/sitemap.xml
+Sitemap: https://www.nseek.io/sitemap.xml
