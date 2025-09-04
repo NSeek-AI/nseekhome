@@ -5,8 +5,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NSeek - Fast Vector Search',
-  description: 'High-performance vector search infrastructure built in Rust. Privacy-first, local processing with production-ready APIs.',
+  title: 'NSeek - Building AI solutions',
+  description: 'High-performance AI tools and solutions.',
   keywords: 'vector search, rust, machine learning, AI, local-first, privacy, nseekfs',
   authors: [{ name: 'NSeek Team' }],
   creator: 'NSeek',
@@ -16,19 +16,19 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://nseek.io'), // 🔧 Domínio correto
+  metadataBase: new URL('https://www.nseek.io'),
   openGraph: {
-    title: 'NSeek - Fast Vector Search',
-    description: 'High-performance vector search infrastructure built in Rust',
-    url: 'https://nseek.io',
+    title: 'NSeek - Building AI solutions',
+    description: 'High-performance AI tools and solutions.',
+    url: 'https://www.nseek.io',
     siteName: 'NSeek',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NSeek - Fast Vector Search',
-    description: 'High-performance vector search infrastructure built in Rust',
+    title: 'NSeek - Building AI solutions',
+    description: 'High-performance AI tools and solutions.',
   },
   robots: {
     index: true,
