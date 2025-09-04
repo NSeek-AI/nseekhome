@@ -274,7 +274,7 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
               GitHub
             </button>
             <button
-              onClick={() => window.open('https://test.pypi.org/project/nseekfs/', '_blank')}
+              onClick={() => window.open('https://pypi.org/project/nseekfs/', '_blank')}
               className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white py-3 rounded-lg hover:from-cyan-700 hover:to-blue-700 transition-all font-semibold shadow-lg"
             >
               PyPI
@@ -464,7 +464,7 @@ const DemoPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSec
                 GitHub
               </button>
               <button
-                onClick={() => window.open('https://test.pypi.org/project/nseekfs/', '_blank')}
+                onClick={() => window.open('https://pypi.org/project/nseekfs/', '_blank')}
                 className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg hover:from-cyan-700 hover:to-blue-700 transition-all"
               >
                 PyPI
