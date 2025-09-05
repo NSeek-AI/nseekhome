@@ -488,7 +488,7 @@ index = nseekfs.from_embeddings(
 )
 
 # Load existing index
-index = nseekfs.from_bin("path/to/index.nseek")
+index = nseekfs.from_bin("path/to/index.bin")
 
 
 ### Query Methods
