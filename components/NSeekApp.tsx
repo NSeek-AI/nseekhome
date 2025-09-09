@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 
-/* ---------------------------- Ícones em uso ---------------------------- */
 const Zap = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -53,19 +52,15 @@ const CheckCircle = ({ className }: { className?: string }) => (
   </svg>
 )
 
-/* ------------------------------ Tipos básicos ----------------------------- */
 type NavigateFn = (path: string) => void
 type GoToSectionFn = (id: string) => void
 
-/* ------------------------------ Componentes UI ---------------------------- */
-// Logo
 const Logo = ({ className, onClick }: { className?: string; onClick?: () => void }) => (
   <div className={`font-bold text-2xl cursor-pointer ${className}`} onClick={onClick}>
     <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400">NSeek</span>
   </div>
 )
 
-// Header
 const Header = ({
   onNavigate,
   currentPage,
@@ -150,7 +145,6 @@ const Header = ({
   )
 }
 
-// Hero
 const Hero = ({ onNavigate }: { onNavigate: NavigateFn }) => (
   <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-600/10 via-transparent to-transparent" />
@@ -191,7 +185,6 @@ const Hero = ({ onNavigate }: { onNavigate: NavigateFn }) => (
   </section>
 )
 
-// Vision
 const Vision = () => (
   <section id="vision" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
     <div className="max-w-6xl mx-auto">
@@ -244,7 +237,6 @@ const Vision = () => (
   </section>
 )
 
-// Projects
 const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
   <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 to-slate-800">
     <div className="max-w-6xl mx-auto">
@@ -306,7 +298,6 @@ const Projects = ({ onNavigate }: { onNavigate: NavigateFn }) => (
   </section>
 )
 
-// Technology
 const Technology = () => (
   <section id="technology" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
     <div className="max-w-6xl mx-auto text-center">
@@ -337,7 +328,6 @@ const Technology = () => (
   </section>
 )
 
-// Contact
 const Contact = () => (
   <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/50">
     <div className="max-w-4xl mx-auto text-center">
@@ -366,7 +356,6 @@ const Contact = () => (
   </section>
 )
 
-// Footer
 const Footer = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSection: GoToSectionFn }) => (
   <footer className="border-t border-slate-700/50 py-12 px-4 sm:px-6 lg:px-8 bg-slate-900">
     <div className="max-w-6xl mx-auto">
@@ -442,7 +431,6 @@ const Footer = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSecti
   </footer>
 )
 
-/* ------------------------------- Página Demo ------------------------------ */
 const DemoPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSection: GoToSectionFn }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 text-white">
@@ -525,7 +513,6 @@ print(f"Reloaded index: {reloaded.rows} vectors")
   )
 }
 
-/* ----------------------------- Página Waitlist ---------------------------- */
 const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goToSection: GoToSectionFn }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -695,7 +682,6 @@ const WaitlistPage = ({ onNavigate, goToSection }: { onNavigate: NavigateFn; goT
   )
 }
 
-/* --------------------------------- App Root -------------------------------- */
 export default function NSeekApp() {
   const [currentPage, setCurrentPage] = useState<'/' | '/demo' | '/waitlist'>('/')
   const [pendingHash, setPendingHash] = useState<string | null>(null)
@@ -734,7 +720,6 @@ export default function NSeekApp() {
     }
   }
 
-  /* Formulário fantasma para deteção do Netlify */
   const NetlifyFormDetector = () => (
     <form name="waitlist" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="text" name="name" />

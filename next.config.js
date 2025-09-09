@@ -5,8 +5,7 @@ const nextConfig = {
   images: {
     unoptimized: true
   },
-  basePath: '', // Para GitHub Pages ou similar, se necessário
-  assetPrefix: '', // Para CDN, se necessário
-}
+  basePath: '',
+  assetPrefix: '', 
 
 module.exports = nextConfig
