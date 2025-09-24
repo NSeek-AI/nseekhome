@@ -473,14 +473,19 @@ import nseekfs
 embeddings = np.random.randn(5000, 384).astype(np.float32)
 query = np.random.randn(384).astype(np.float32)
 
-# Normalize for cosine similarity
-embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
-query = query / np.linalg.norm(query)
+# Choose metric: "cosine", "dot", or "euclidean"
+metric = "cosine"
+
+# Normalize only if using cosine
+if metric == "cosine":
+    embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
+    query = query / np.linalg.norm(query)
 
 # Build index
 index = nseekfs.from_embeddings(
-    embeddings,        # numpy array of float32 vectors
-    normalized=True,   # true if vectors already normalized
+    embeddings,       # numpy array of float32 vectors
+    metric=metric,
+    normalized=True,  # True if using cosine and vectors are pre-normalized
 )
 print(f"Index built: {index.rows} vectors x {index.dims} dims")
 
